@@ -1,0 +1,15 @@
+query Pokedex_entries {
+  allPokemon {
+    name
+    id
+    sprites {
+      front_default
+    }
+    color
+    nat_dex_num
+    generation
+    types {
+      name
+    }
+  }
+}
