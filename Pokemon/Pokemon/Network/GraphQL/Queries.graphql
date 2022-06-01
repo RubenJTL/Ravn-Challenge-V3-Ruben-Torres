@@ -1,4 +1,4 @@
-query Pokedex_entries {
+query GetAllPokemons {
   allPokemon {
     name
     id

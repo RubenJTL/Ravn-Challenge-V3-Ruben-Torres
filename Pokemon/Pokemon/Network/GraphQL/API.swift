@@ -4,11 +4,11 @@
 import Apollo
 import Foundation
 
-public final class PokedexEntriesQuery: GraphQLQuery {
+public final class GetAllPokemonsQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query Pokedex_entries {
+    query GetAllPokemons {
       allPokemon {
         __typename
         name
@@ -28,7 +28,7 @@ public final class PokedexEntriesQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "Pokedex_entries"
+  public let operationName: String = "GetAllPokemons"
 
   public init() {
   }
