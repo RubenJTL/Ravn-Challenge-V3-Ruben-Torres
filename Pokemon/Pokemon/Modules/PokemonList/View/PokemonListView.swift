@@ -18,6 +18,7 @@ struct PokemonListView: View {
     var body: some View {
         NavigationView {
             ZStack {
+                Color.background.ignoresSafeArea(.all, edges: .bottom)
                 if viewModel.isLoading == true {
                     ProgressView()
                 } else {
@@ -58,10 +59,9 @@ struct PokemonListView: View {
                 LazyVStack {
                     ForEach(viewModel.generations, id: \.self) {  generation in
                         generationHeader(title: generation)
-                        
                         ForEach(viewModel.searchResults[generation] ?? []) { pokemon in
                             NavigationLink {
-                                ContentView()
+                                PokemonDetailsView()
                             } label: {
                                 PokemonCell(pokemon: pokemon)
                             }

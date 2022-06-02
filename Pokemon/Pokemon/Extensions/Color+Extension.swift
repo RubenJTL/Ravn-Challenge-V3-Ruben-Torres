@@ -27,4 +27,6 @@ extension Color {
 extension UIColor {
     static let background = UIColor(named: "Background")
     static let cellBackground = UIColor(named: "CellBackground")
+    static let selectedSegment = UIColor(named: "SelectedSegment")
+    static let segmentBackground = UIColor(named: "SegmentBackground")
 }
