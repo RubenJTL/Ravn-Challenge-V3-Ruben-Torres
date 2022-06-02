@@ -8,39 +8,57 @@
 import Foundation
 import Combine
 
-class PokemonListViewModel {
+
+
+class PokemonListViewModel: ObservableObject {
+    
+    // MARK: - Output(s)
+    @Published var searchResults = [String:[PokemonDex]]()
     @Published var pokemons = [PokemonDex]()
     @Published var searchText = ""
-
+    @Published var isLoading = false
+    
     private let service: PokemonListServiceType
     
     private var cancellable = Set<AnyCancellable>()
     
-    var pokemonsSectioned: [String: [PokemonDex]] {
-        Dictionary(grouping: searchResults) {
-            $0.generation
-        }
+    var generations: [String] {
+        searchResults.keys.sorted(by: <).map { String($0) }
     }
-    
-    var searchResults: [PokemonDex] {
-           if searchText.isEmpty {
-               return pokemons
-           } else {
-               return pokemons.filter {
-                   return $0.name.starts(with: searchText)
-               }
-           }
-       }
-    
     
     init(service: PokemonListServiceType = PokemonListService()){
         self.service = service
+        
+        setupBindings()
+    }
+    
+    func setupBindings() {
+        fetchPokemons()
+        
+        Publishers.CombineLatest($searchText, $pokemons)
+            .map { text, pokemons -> [PokemonDex] in
+                if text.isEmpty { return pokemons}
+                return pokemons.filter {
+                    $0.name.starts(with: text)
+                }
+            }
+            .compactMap { $0 }
+            .map({ pokemons -> [String:[PokemonDex]] in
+                Dictionary(grouping: pokemons) {
+                    $0.generation
+                }
+            })
+            .assign(to: &$searchResults)
+        
     }
     
     func fetchPokemons() {
+        isLoading = true
         service.getAllPokemons()
             .sink(
-                receiveCompletion: { _ in },
+                receiveCompletion: { [weak self] _ in
+                    self?.isLoading = false
+                },
                 receiveValue: { [weak self] response in
                     self?.pokemons = response.allPokemon
                 })

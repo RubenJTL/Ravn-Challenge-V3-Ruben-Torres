@@ -9,6 +9,8 @@ import SwiftUI
 
 extension Color {
     static let cellBackground = Color("CellBackground")
+    static let background = Color("Background")
+    static let divider = Color("Divider")
     static let font = Color("Font")
     static let pBlack = Color("Black")
     static let pBlue = Color("Blue")
@@ -20,4 +22,9 @@ extension Color {
     static let pRed = Color("Red")
     static let pWhite = Color("White")
     static let pYellow = Color("Yellow")
+}
+
+extension UIColor {
+    static let background = UIColor(named: "Background")
+    static let cellBackground = UIColor(named: "CellBackground")
 }

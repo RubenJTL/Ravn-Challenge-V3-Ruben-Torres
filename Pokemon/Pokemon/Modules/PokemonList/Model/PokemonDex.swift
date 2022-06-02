@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokemonDex: Codable {
+struct PokemonDex: Codable, Identifiable {
     let id: Int
     var name: String
     let frontalSprite: URL?

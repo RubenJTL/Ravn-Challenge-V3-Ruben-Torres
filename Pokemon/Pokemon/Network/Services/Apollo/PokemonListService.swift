@@ -31,6 +31,7 @@ final class PokemonListService: PokemonListServiceType {
             }
             .compactMap { $0 }
             .decode(type: PokemonListResponse.self, decoder: JSONDecoder())
+            .compactMap { $0 }
             .eraseToAnyPublisher()
     }
     
