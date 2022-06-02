@@ -8,5 +8,6 @@
 import Foundation
 
 enum NetworkError: Error {
-case failLoadData
+    case failLoadData
+    case invalidURL
 }
