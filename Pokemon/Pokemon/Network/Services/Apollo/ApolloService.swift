@@ -10,20 +10,20 @@ import Combine
 import Apollo
 
 protocol ApolloServiceType {
-    func fetch<T: GraphQLQuery>(query: T) -> AnyPublisher<T.Data, Error>
+    func execute<T: GraphQLQuery>(query: T) -> AnyPublisher<T.Data, Error>
 
 }
 
 final class ApolloService: ApolloServiceType {
-    private var apolloClient: ApolloClient
+    private let client: ApolloClient
     
-    init(apolloClient: ApolloClient) {
-        self.apolloClient = apolloClient
+    init(client: ApolloClient) {
+        self.client = client
     }
     
-    func fetch<T: GraphQLQuery>(query: T) -> AnyPublisher<T.Data, Error> {
-        Future<T.Data, Error> { [weak apolloClient] promise in
-            apolloClient?.fetch(query: query) { result in
+    func execute<T: GraphQLQuery>(query: T) -> AnyPublisher<T.Data, Error> {
+        Future<T.Data, Error> { [weak client] promise in
+            client?.fetch(query: query) { result in
                 switch result {
                 case .success(let graphQLResult):
                     guard let data = graphQLResult.data else {

@@ -13,12 +13,6 @@ public final class GetAllPokemonsQuery: GraphQLQuery {
         __typename
         name
         id
-        sprites {
-          __typename
-          front_default
-        }
-        color
-        nat_dex_num
         generation
         types {
           __typename
@@ -70,9 +64,6 @@ public final class GetAllPokemonsQuery: GraphQLQuery {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("name", type: .scalar(String.self)),
           GraphQLField("id", type: .scalar(Int.self)),
-          GraphQLField("sprites", type: .object(Sprite.selections)),
-          GraphQLField("color", type: .scalar(String.self)),
-          GraphQLField("nat_dex_num", type: .scalar(Int.self)),
           GraphQLField("generation", type: .scalar(String.self)),
           GraphQLField("types", type: .list(.object(`Type`.selections))),
         ]
@@ -84,8 +75,8 @@ public final class GetAllPokemonsQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(name: String? = nil, id: Int? = nil, sprites: Sprite? = nil, color: String? = nil, natDexNum: Int? = nil, generation: String? = nil, types: [`Type`?]? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Pokemon", "name": name, "id": id, "sprites": sprites.flatMap { (value: Sprite) -> ResultMap in value.resultMap }, "color": color, "nat_dex_num": natDexNum, "generation": generation, "types": types.flatMap { (value: [`Type`?]) -> [ResultMap?] in value.map { (value: `Type`?) -> ResultMap? in value.flatMap { (value: `Type`) -> ResultMap in value.resultMap } } }])
+      public init(name: String? = nil, id: Int? = nil, generation: String? = nil, types: [`Type`?]? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Pokemon", "name": name, "id": id, "generation": generation, "types": types.flatMap { (value: [`Type`?]) -> [ResultMap?] in value.map { (value: `Type`?) -> ResultMap? in value.flatMap { (value: `Type`) -> ResultMap in value.resultMap } } }])
       }
 
       public var __typename: String {
@@ -115,35 +106,6 @@ public final class GetAllPokemonsQuery: GraphQLQuery {
         }
       }
 
-      /// array of Sprite objects
-      public var sprites: Sprite? {
-        get {
-          return (resultMap["sprites"] as? ResultMap).flatMap { Sprite(unsafeResultMap: $0) }
-        }
-        set {
-          resultMap.updateValue(newValue?.resultMap, forKey: "sprites")
-        }
-      }
-
-      /// basic color of the queried Pokemon
-      public var color: String? {
-        get {
-          return resultMap["color"] as? String
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "color")
-        }
-      }
-
-      public var natDexNum: Int? {
-        get {
-          return resultMap["nat_dex_num"] as? Int
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "nat_dex_num")
-        }
-      }
-
       /// which generation the queried Pokemon debuted in
       public var generation: String? {
         get {
@@ -161,45 +123,6 @@ public final class GetAllPokemonsQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue.flatMap { (value: [`Type`?]) -> [ResultMap?] in value.map { (value: `Type`?) -> ResultMap? in value.flatMap { (value: `Type`) -> ResultMap in value.resultMap } } }, forKey: "types")
-        }
-      }
-
-      public struct Sprite: GraphQLSelectionSet {
-        public static let possibleTypes: [String] = ["Sprites"]
-
-        public static var selections: [GraphQLSelection] {
-          return [
-            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-            GraphQLField("front_default", type: .scalar(String.self)),
-          ]
-        }
-
-        public private(set) var resultMap: ResultMap
-
-        public init(unsafeResultMap: ResultMap) {
-          self.resultMap = unsafeResultMap
-        }
-
-        public init(frontDefault: String? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Sprites", "front_default": frontDefault])
-        }
-
-        public var __typename: String {
-          get {
-            return resultMap["__typename"]! as! String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        public var frontDefault: String? {
-          get {
-            return resultMap["front_default"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "front_default")
-          }
         }
       }
 

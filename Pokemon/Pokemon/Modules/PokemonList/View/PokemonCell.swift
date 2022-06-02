@@ -8,59 +8,76 @@
 import SwiftUI
 
 struct PokemonCell: View {
-    private let pokemonImageSize: CGSize = .init(width: 72, height: 72)
-    private let pokemonImageOffset: CGFloat =  -48.0
-    private let typeImageSize: CGSize = .init(width: 30, height: 30)
-    private let borderRadius: CGFloat = 16
+    let pokemon: PokemonDex
     
     var body: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: borderRadius)
-                .foregroundColor(Color.cellBackground)
-            HStack(alignment: .center) {
-                AsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png"),
-                           content: { image in
-                    image.resizable()
-                        .frame(maxWidth: pokemonImageSize.width, maxHeight: pokemonImageSize.height)
-                        .shadow(color: Color.black.opacity(0.50), radius: 4, x: 0, y: 4)
-
-                },
-                           placeholder: {
-                    ProgressView()
-                })
-                .padding(.leading, pokemonImageOffset)
-
-                VStack(alignment: .leading) {
-                    Text("Charizard")
-                        .textStyle(with: .bodyHighEmphasis)
-                    Text("#006")
-                        .textStyle(with: .body)
-                }
-                .padding(.leading, 8.0)
-                
+            background
+            HStack(alignment: .center, spacing: .zero) {
+                sprite
+                nameAndNumber
                 Spacer()
+                types
             }
             .padding(.horizontal, 16.0)
         }
-        .listRowSeparator(.hidden)
         .padding(.leading, 24)
+    }
+    
+    private var background: some View {
+        RoundedRectangle(
+            cornerRadius: DrawingConstants.borderRadius
+        )
+        .foregroundColor(Color.cellBackground)
+    }
+    
+    private var sprite: some View {
+        Avatar(
+            url: pokemon.frontalSprite,
+            width: DrawingConstants.pokemonImageSize.width,
+            height: DrawingConstants.pokemonImageSize.height
+        )
+        .padding(.leading, DrawingConstants.pokemonImageOffset)
+    }
+    
+    private var nameAndNumber: some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(pokemon.name)
+                .textStyle(with: .bodyHighEmphasis)
+            Text(pokemon.id.formattedId)
+                .textStyle(with: .body)
+        }
+        .padding(.leading, 8.0)
+    }
+    
+    private var types: some View {
+        ForEach(pokemon.types, id: \.self.name) { type in
+            Image("Type\(type.name)")
+        }
+    }
+    
+    private struct DrawingConstants {
+        static let pokemonImageSize: CGSize = .init(width: 72, height: 72)
+        static let pokemonImageOffset: CGFloat = -48.0
+        static let typeImageSize: CGSize = .init(width: 30, height: 30)
+        static let borderRadius: CGFloat = 16
     }
 }
 
 struct PokemonRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PokemonCell()
+            PokemonCell(pokemon: PokemonDex.noLegendary)
                 .preferredColorScheme(.light)
                 .padding(.vertical, 10.0)
                 .padding(.horizontal, 24.0)
-            .frame(height: 100.0)
-            PokemonCell()
+                .frame(height: 100.0)
+            PokemonCell(pokemon: PokemonDex.legendary)
                 .preferredColorScheme(.dark)
                 .padding(.vertical, 10.0)
                 .padding(.horizontal, 24.0)
                 .frame(height: 100.0)
         }
-            
+        
     }
 }
