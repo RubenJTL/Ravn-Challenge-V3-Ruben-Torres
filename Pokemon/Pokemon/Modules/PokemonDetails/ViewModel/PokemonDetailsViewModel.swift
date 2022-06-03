@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 final class PokemonDetailsViewModel: ObservableObject {
@@ -21,6 +22,32 @@ final class PokemonDetailsViewModel: ObservableObject {
     @Published var activeSprite = ActiveSprite.defaultSprite
     @Published var isLoading = false
     @Published var isLoadingEvolutions = false
+    
+    var backgroundColor: Color {
+        switch pokemon.color {
+        case "black":
+            return .pBlack
+        case "blue":
+            return .pBlue
+        case "brown":
+            return .pBrown
+        case "gray":
+            return .pGray
+        case "green":
+            return .pGreen
+        case "pink":
+            return .pPink
+        case "purple":
+            return .pPurple
+        case "red":
+            return .pRed
+        case "yellow":
+            return .pYellow
+        default:
+            return .pWhite
+        }
+    }
+    
     var evolvesNames = [String]()
     private var pokemonId: Int
     

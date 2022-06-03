@@ -18,7 +18,8 @@ struct PokemonDetailsView: View {
     
     var body: some View {
         ZStack {
-            Color.pGreen.opacity(0.5)
+            viewModel.backgroundColor
+                .opacity(0.5)
             VStack {
                 header
                 details
@@ -97,7 +98,6 @@ struct PokemonDetailsView: View {
                         .textStyle(with: .footnote)
                         .padding(.bottom)
                     
-                    CustomDivider()
                 }
                 .padding(.top, 16)
                 .padding(.horizontal, 16)
@@ -112,8 +112,11 @@ struct PokemonDetailsView: View {
         ZStack {
             if !viewModel.pokemon.evolves.isEmpty {
                 VStack(spacing: .zero) {
+                    CustomDivider()
                     Text("Evolutions")
                         .textStyle(with: .title3)
+                        .padding(.top, 8)
+                    
                     ScrollView {
                         ForEach(viewModel.pokemon.evolves) { evolve in
                             HStack(spacing: 20) {
@@ -133,7 +136,6 @@ struct PokemonDetailsView: View {
                         .padding(.top, 16)
                     }
                 }
-                .padding(.top, 8)
             }
             if viewModel.isLoadingEvolutions {
                 ProgressView()
