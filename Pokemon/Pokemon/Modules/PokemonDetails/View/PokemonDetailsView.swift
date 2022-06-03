@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct PokemonDetailsView: View {
+    @ObservedObject var viewModel: PokemonDetailsViewModel
+    
     @State private var favoriteColor = 0
     
-    init() {
+    init(pokemonId: Int) {
+        viewModel = PokemonDetailsViewModel(pokemonId: pokemonId)
         UISegmentedControl.appearance().selectedSegmentTintColor = .selectedSegment
         UISegmentedControl.appearance().backgroundColor = .segmentBackground
     }
@@ -30,14 +33,29 @@ struct PokemonDetailsView: View {
     
     private var header: some View {
         VStack(spacing: 10) {
-            Avatar(url: PokemonDex.noLegendary.frontalSprite, width: 158, height: 158)
-            Picker("Pokemon Sprite", selection: $favoriteColor) {
+            ZStack {
+                if viewModel.activeSprite == .defaultSprite {
+                    Avatar(
+                        url: viewModel.pokemon.sprites.defaultFront,
+                        width: 158,
+                        height: 158
+                    )
+                } else {
+                    Avatar(
+                        url: viewModel.pokemon.sprites.shinyFront,
+                        width: 158,
+                        height: 158
+                    )
+                }
+            }
+            Picker("Pokemon Sprite",
+                   selection: $viewModel.activeSprite) {
                 Text("Default Sprite")
                     .textStyle(with: .subheadlineHighEmphasis)
-                    .tag(0)
+                    .tag(PokemonDetailsViewModel.ActiveSprite.defaultSprite)
                 Text("Shiny Sprite")
                     .textStyle(with: .subheadlineHighEmphasis)
-                    .tag(1)
+                    .tag(PokemonDetailsViewModel.ActiveSprite.shinySprite)
             }
             .pickerStyle(.segmented)
             .padding(.horizontal, 16)
@@ -50,18 +68,18 @@ struct PokemonDetailsView: View {
                 .clipShape( RoundedCorner(radius: 31, corners: [.topLeft, .topRight]) )
                 .ignoresSafeArea()
             VStack(spacing: .zero){
-                Text(PokemonDex.noLegendary.name)
+                Text("\(viewModel.pokemon.id.formattedId) \(viewModel.pokemon.name)")
                     .textStyle(with: .title1)
                 HStack(spacing: .zero) {
-                    ForEach(PokemonDex.noLegendary.types, id: \.self.name) { type in
-                        Image("Tag\(type.name)")
+                    ForEach(viewModel.pokemon.types, id: \.self) { type in
+                        Image("Tag\(type)")
                     }
                 }
                 .padding(.bottom)
-                Text(PokemonDex.noLegendary.generation)
+                Text(viewModel.pokemon.generation)
                     .textStyle(with: .body)
                     .padding(.bottom)
-                Text("Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.")
+                Text(viewModel.pokemon.description)
                     .multilineTextAlignment(.center)
                     .textStyle(with: .footnote)
                     .padding(.bottom)
@@ -116,9 +134,9 @@ struct PokemonDetailsView: View {
 struct PokemonDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PokemonDetailsView()
+            PokemonDetailsView(pokemonId: 1)
                 .preferredColorScheme(.light)
-            PokemonDetailsView()
+            PokemonDetailsView(pokemonId: 1)
                 .preferredColorScheme(.dark)
         }
         

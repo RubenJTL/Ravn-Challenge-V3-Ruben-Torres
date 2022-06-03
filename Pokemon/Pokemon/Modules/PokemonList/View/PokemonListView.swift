@@ -61,7 +61,7 @@ struct PokemonListView: View {
                         generationHeader(title: generation)
                         ForEach(viewModel.searchResults[generation] ?? []) { pokemon in
                             NavigationLink {
-                                PokemonDetailsView()
+                                PokemonDetailsView(pokemonId: pokemon.id)
                             } label: {
                                 PokemonCell(pokemon: pokemon)
                             }
