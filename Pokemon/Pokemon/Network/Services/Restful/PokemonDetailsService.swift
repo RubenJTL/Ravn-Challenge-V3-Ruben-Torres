@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 protocol PokemonDetailServiceType {
-    func getPokemonSpecies(id: Int) throws -> AnyPublisher<PokemonSpeciesResponse, Error>
-    func getPokemon(id: Int) throws -> AnyPublisher<PokemonResponse, Error>
+    func getPokemonSpecies(id: Int) -> AnyPublisher<PokemonSpeciesResponse, Error>
+    func getPokemon(id: Int) -> AnyPublisher<PokemonResponse, Error>
     func getSprites(name: String) -> AnyPublisher<PokemonResponse, Error>
     func getEvolves(stringUrl: String) -> AnyPublisher<EvolvesResponse, Error>
 }
@@ -28,20 +28,16 @@ final class PokemonDetailService: PokemonDetailServiceType {
         self.resfulService = resfulService
     }
     
-    func getPokemonSpecies(id: Int) throws -> AnyPublisher<PokemonSpeciesResponse, Error> {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon-species/\(id)/") else {
-            throw NetworkError.invalidURL
-        }
+    func getPokemonSpecies(id: Int) -> AnyPublisher<PokemonSpeciesResponse, Error> {
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon-species/\(id)/")!
         
         return resfulService.execute(for: url)
             .decode(type: PokemonSpeciesResponse.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
     
-    func getPokemon(id: Int) throws -> AnyPublisher<PokemonResponse, Error> {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)/") else {
-            throw NetworkError.invalidURL
-        }
+    func getPokemon(id: Int) -> AnyPublisher<PokemonResponse, Error> {
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)/")!
         
         return resfulService.execute(for: url)
             .decode(type: PokemonResponse.self, decoder: decoder)

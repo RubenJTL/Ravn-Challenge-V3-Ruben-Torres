@@ -13,9 +13,3 @@ struct CustomDivider: View {
             .foregroundColor(.divider)
     }
 }
-
-struct CustomDivider_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomDivider()
-    }
-}
