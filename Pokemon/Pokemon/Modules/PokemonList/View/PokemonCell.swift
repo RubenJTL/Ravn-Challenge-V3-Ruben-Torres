@@ -34,8 +34,7 @@ struct PokemonCell: View {
     private var sprite: some View {
         Avatar(
             url: pokemon.frontalSprite,
-            width: DrawingConstants.pokemonImageSize.width,
-            height: DrawingConstants.pokemonImageSize.height
+            size: DrawingConstants.pokemonImageSize
         )
         .padding(.leading, DrawingConstants.pokemonImageOffset)
     }
@@ -53,6 +52,11 @@ struct PokemonCell: View {
     private var types: some View {
         ForEach(pokemon.types, id: \.self.name) { type in
             Image("Type\(type.name)")
+                .resizable()
+                .frame(
+                    width: DrawingConstants.typeImageSize.width,
+                    height: DrawingConstants.typeImageSize.height
+                )
         }
     }
     

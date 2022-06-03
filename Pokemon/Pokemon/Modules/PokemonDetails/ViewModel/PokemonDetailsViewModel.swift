@@ -110,12 +110,14 @@ final class PokemonDetailsViewModel: ObservableObject {
         timerPulbisherCancelable = Timer.publish(every: 1, on: RunLoop.main, in: .common)
             .autoconnect()
             .sink {[weak self] geocoder in
-                if let evolveNames  = self?.evolvesNames , evolveNames.isEmpty {
-                    self?.isLoadingEvolutions = false
+                guard let evolveNames  = self?.evolvesNames , evolveNames.isEmpty else {
+                    if let evolveName = self?.evolvesNames.removeFirst() {
+                        self?.pokemonEvolvePublisher.send(evolveName)
+                    }
+                    return
                 }
-                if let evolveName = self?.evolvesNames.popLast() {
-                    self?.pokemonEvolvePublisher.send(evolveName)
-                }
+                self?.isLoadingEvolutions = false
+                
             }
     }
     

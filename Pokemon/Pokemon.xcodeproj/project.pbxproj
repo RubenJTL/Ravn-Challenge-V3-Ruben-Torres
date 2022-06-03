@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4574EFA928499C5D00DE2B86 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4574EFA828499C5D00DE2B86 /* CachedAsyncImage */; };
+		4574EFAB284A5A3E00DE2B86 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574EFAA284A5A3E00DE2B86 /* CustomDivider.swift */; };
+		4574EFAD284A5AC200DE2B86 /* EvolutionAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574EFAC284A5AC200DE2B86 /* EvolutionAvatar.swift */; };
+		4574EFAF284A5EBE00DE2B86 /* EvolutionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4574EFAE284A5EBE00DE2B86 /* EvolutionInfo.swift */; };
 		458E1F982847FF9200F113AA /* ApolloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E1F972847FF9200F113AA /* ApolloService.swift */; };
 		458E1F9A2847FFAB00F113AA /* Queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 458E1F992847FFAB00F113AA /* Queries.graphql */; };
 		458E1FA3284800A600F113AA /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 458E1FA2284800A600F113AA /* schema.json */; };
@@ -61,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4574EFAA284A5A3E00DE2B86 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
+		4574EFAC284A5AC200DE2B86 /* EvolutionAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionAvatar.swift; sourceTree = "<group>"; };
+		4574EFAE284A5EBE00DE2B86 /* EvolutionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionInfo.swift; sourceTree = "<group>"; };
 		458E1F972847FF9200F113AA /* ApolloService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloService.swift; sourceTree = "<group>"; };
 		458E1F992847FFAB00F113AA /* Queries.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Queries.graphql; sourceTree = "<group>"; };
 		458E1FA2284800A600F113AA /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
@@ -241,7 +247,10 @@
 			isa = PBXGroup;
 			children = (
 				459FDDE62849047000694C43 /* Avatar.swift */,
+				4574EFAC284A5AC200DE2B86 /* EvolutionAvatar.swift */,
 				459FDDF028495AF800694C43 /* RoundedCorner.swift */,
+				4574EFAA284A5A3E00DE2B86 /* CustomDivider.swift */,
+				4574EFAE284A5EBE00DE2B86 /* EvolutionInfo.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -512,6 +521,7 @@
 				458E1FBF284817DB00F113AA /* NetworkError.swift in Sources */,
 				45D8AE022847FE9000F5D4E6 /* ContentView.swift in Sources */,
 				459FDDE1284880FD00694C43 /* PokemonListViewModel.swift in Sources */,
+				4574EFAB284A5A3E00DE2B86 /* CustomDivider.swift in Sources */,
 				458E1F982847FF9200F113AA /* ApolloService.swift in Sources */,
 				459FDDDE2848769D00694C43 /* PokemonListResponse.swift in Sources */,
 				459FDDE928490B1400694C43 /* PokemonListView.swift in Sources */,
@@ -525,6 +535,8 @@
 				458E1FB42848077500F113AA /* API.swift in Sources */,
 				459FDDD828485AFA00694C43 /* View+Extension.swift in Sources */,
 				459FDDEF2849579D00694C43 /* PokemonDetailsView.swift in Sources */,
+				4574EFAD284A5AC200DE2B86 /* EvolutionAvatar.swift in Sources */,
+				4574EFAF284A5EBE00DE2B86 /* EvolutionInfo.swift in Sources */,
 				45D8AE002847FE9000F5D4E6 /* PokemonApp.swift in Sources */,
 				459FDDDA2848673A00694C43 /* Color+Extension.swift in Sources */,
 			);
