@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 struct Avatar: View {
     let url: URL?
@@ -13,8 +14,9 @@ struct Avatar: View {
     let height: CGFloat?
     
     var body: some View {
-        AsyncImage(
+        CachedAsyncImage(
             url: url,
+            urlCache: .imageCache,
             content: { image in
                 image
                     .resizable()
@@ -35,6 +37,10 @@ struct Avatar: View {
             alignment: .center
         )
     }
+}
+
+extension URLCache {
+    static let imageCache = URLCache(memoryCapacity: 512*1000*1000, diskCapacity: 10*1000*1000*1000)
 }
 
 struct PokemonImage_Previews: PreviewProvider {

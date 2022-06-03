@@ -99,7 +99,7 @@ struct PokemonDetailsView: View {
                 .fill()
                 .foregroundColor(.cellBackground)
                 
-            Avatar(url: PokemonDex.noLegendary.frontalSprite, width: 80, height: 80)
+            Avatar(url: url, width: 80, height: 80)
         }
         .frame(width: 80, height: 80)
     }
@@ -107,8 +107,10 @@ struct PokemonDetailsView: View {
     private func evolutionInfo(url: URL?, name: String, id: Int) -> some View {
         VStack {
             evolutionAvatar(url: url)
+                
             Text(name)
                 .textStyle(with: .bodyHighEmphasis)
+                .frame(width: 120)
             Text(id.formattedId)
                 .textStyle(with: .body)
         }
@@ -119,8 +121,12 @@ struct PokemonDetailsView: View {
             Text("Evolutions")
                 .textStyle(with: .title3)
             ScrollView {
-                HStack(spacing: 24) {
-                    evolutionInfo(url: PokemonDex.noLegendary.frontalSprite, name: PokemonDex.noLegendary.name, id: PokemonDex.noLegendary.id)
+                HStack(spacing: 20) {
+                    evolutionInfo(
+                        url: viewModel.pokemon.sprites.defaultFront,
+                        name: viewModel.pokemon.name,
+                        id: viewModel.pokemon.id)
+                    
                     Image(systemName: "arrow.right")
                     evolutionInfo(url: PokemonDex.noLegendary.frontalSprite, name: PokemonDex.noLegendary.name, id: PokemonDex.noLegendary.id)
                 }

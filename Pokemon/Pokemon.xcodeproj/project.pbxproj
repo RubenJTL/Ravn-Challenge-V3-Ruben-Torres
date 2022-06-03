@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4574EFA928499C5D00DE2B86 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4574EFA828499C5D00DE2B86 /* CachedAsyncImage */; };
 		458E1F982847FF9200F113AA /* ApolloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458E1F972847FF9200F113AA /* ApolloService.swift */; };
 		458E1F9A2847FFAB00F113AA /* Queries.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 458E1F992847FFAB00F113AA /* Queries.graphql */; };
 		458E1FA3284800A600F113AA /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 458E1FA2284800A600F113AA /* schema.json */; };
@@ -101,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				458E1FB02848059F00F113AA /* ApolloAPI in Frameworks */,
+				4574EFA928499C5D00DE2B86 /* CachedAsyncImage in Frameworks */,
 				458E1FB22848059F00F113AA /* ApolloCodegenLib in Frameworks */,
 				458E1FAE2848059F00F113AA /* Apollo in Frameworks */,
 			);
@@ -359,6 +361,7 @@
 				458E1FAD2848059F00F113AA /* Apollo */,
 				458E1FAF2848059F00F113AA /* ApolloAPI */,
 				458E1FB12848059F00F113AA /* ApolloCodegenLib */,
+				4574EFA828499C5D00DE2B86 /* CachedAsyncImage */,
 			);
 			productName = Pokemon;
 			productReference = 45D8ADFC2847FE9000F5D4E6 /* Pokemon.app */;
@@ -434,6 +437,7 @@
 			mainGroup = 45D8ADF32847FE9000F5D4E6;
 			packageReferences = (
 				458E1FAC2848059F00F113AA /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				4574EFA728499C5D00DE2B86 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 45D8ADFD2847FE9000F5D4E6 /* Products */;
 			projectDirPath = "";
@@ -851,6 +855,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4574EFA728499C5D00DE2B86 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		458E1FAC2848059F00F113AA /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
@@ -862,6 +874,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4574EFA828499C5D00DE2B86 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4574EFA728499C5D00DE2B86 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		458E1FAD2848059F00F113AA /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 458E1FAC2848059F00F113AA /* XCRemoteSwiftPackageReference "apollo-ios" */;

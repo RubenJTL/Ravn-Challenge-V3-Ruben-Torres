@@ -30,7 +30,7 @@ final class PokemonDetailsViewModel: ObservableObject {
                 .sink(receiveCompletion: {_ in }, receiveValue: {[weak self] response in
                     let description = response.flavorTextEntries.filter { textEntry in
                         textEntry.version.name == "omega-ruby" && textEntry.language.name == "en"
-                    }.first!.flavorText
+                    }.first?.flavorText ?? ""
                     self?.pokemon.id = response.id
                     self?.pokemon.name = response.name.capitalized
                     self?.pokemon.isLegendary = response.isLegendary
