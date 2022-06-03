@@ -18,10 +18,10 @@ struct Pokemon {
     var sprites: Sprites
     var evolves: [Evolve]
     
-    struct Evolve {
+    struct Evolve: Identifiable {
         var id: Int
         var name: String
-        var sprites: [Sprites]
+        var sprites: Sprites
     }
     
     struct Sprites {

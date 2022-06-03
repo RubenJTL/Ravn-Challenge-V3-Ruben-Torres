@@ -25,6 +25,9 @@ struct PokemonDetailsView: View {
                 header
                 details
             }
+            if viewModel.isLoading {
+                ProgressView()
+            }
         }
         .background(Color.cellBackground, ignoresSafeAreaEdges: [.top])
         .navigationTitle(Text("Pokemon Info"))
@@ -57,8 +60,8 @@ struct PokemonDetailsView: View {
                     .textStyle(with: .subheadlineHighEmphasis)
                     .tag(PokemonDetailsViewModel.ActiveSprite.shinySprite)
             }
-            .pickerStyle(.segmented)
-            .padding(.horizontal, 16)
+                   .pickerStyle(.segmented)
+                   .padding(.horizontal, 16)
         }
     }
     
@@ -67,28 +70,34 @@ struct PokemonDetailsView: View {
             Color.background
                 .clipShape( RoundedCorner(radius: 31, corners: [.topLeft, .topRight]) )
                 .ignoresSafeArea()
-            VStack(spacing: .zero){
-                Text("\(viewModel.pokemon.id.formattedId) \(viewModel.pokemon.name)")
-                    .textStyle(with: .title1)
-                HStack(spacing: .zero) {
-                    ForEach(viewModel.pokemon.types, id: \.self) { type in
-                        Image("Tag\(type)")
+            VStack {
+                VStack(spacing: .zero){
+                    Text("\(viewModel.pokemon.id.formattedId) \(viewModel.pokemon.name)")
+                        .textStyle(with: .title1)
+                    HStack(spacing: .zero) {
+                        ForEach(viewModel.pokemon.types, id: \.self) { type in
+                            Image("Tag\(type)")
+                        }
                     }
+                    .padding(.bottom)
+                    Text(viewModel.pokemon.generation)
+                        .textStyle(with: .body)
+                        .padding(.bottom)
+                    Text(viewModel.pokemon.description)
+                        .multilineTextAlignment(.center)
+                        .textStyle(with: .footnote)
+                        .padding(.bottom)
+                    Divider()
+                   
+                    
                 }
-                .padding(.bottom)
-                Text(viewModel.pokemon.generation)
-                    .textStyle(with: .body)
-                    .padding(.bottom)
-                Text(viewModel.pokemon.description)
-                    .multilineTextAlignment(.center)
-                    .textStyle(with: .footnote)
-                    .padding(.bottom)
-                Divider()
+                .padding(.top, 16)
+                .padding(.horizontal, 16)
+
                 evolutions
                 Spacer()
             }
-            .padding(.top, 16)
-            .padding(.horizontal, 16)
+
         }
         
     }
@@ -98,7 +107,7 @@ struct PokemonDetailsView: View {
             Circle()
                 .fill()
                 .foregroundColor(.cellBackground)
-                
+            
             Avatar(url: url, width: 80, height: 80)
         }
         .frame(width: 80, height: 80)
@@ -107,7 +116,7 @@ struct PokemonDetailsView: View {
     private func evolutionInfo(url: URL?, name: String, id: Int) -> some View {
         VStack {
             evolutionAvatar(url: url)
-                
+            
             Text(name)
                 .textStyle(with: .bodyHighEmphasis)
                 .frame(width: 120)
@@ -117,23 +126,39 @@ struct PokemonDetailsView: View {
     }
     
     private var evolutions: some View {
-        VStack(spacing: .zero) {
-            Text("Evolutions")
-                .textStyle(with: .title3)
-            ScrollView {
-                HStack(spacing: 20) {
-                    evolutionInfo(
-                        url: viewModel.pokemon.sprites.defaultFront,
-                        name: viewModel.pokemon.name,
-                        id: viewModel.pokemon.id)
-                    
-                    Image(systemName: "arrow.right")
-                    evolutionInfo(url: PokemonDex.noLegendary.frontalSprite, name: PokemonDex.noLegendary.name, id: PokemonDex.noLegendary.id)
+        ZStack {
+            if !viewModel.pokemon.evolves.isEmpty {
+                VStack(spacing: .zero) {
+                    Text("Evolutions")
+                        .textStyle(with: .title3)
+                    ScrollView {
+                        ForEach(viewModel.pokemon.evolves) { evolve in
+                            HStack(spacing: 20) {
+                                evolutionInfo(
+                                    url: viewModel.pokemon.sprites.defaultFront,
+                                    name: viewModel.pokemon.name,
+                                    id: viewModel.pokemon.id)
+                                
+                                Image(systemName: "arrow.right")
+                                evolutionInfo(
+                                    url: evolve.sprites.defaultFront,
+                                    name: evolve.name,
+                                    id: evolve.id
+                                )
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                        .padding(.top, 16)
+                    }
                 }
-                .padding(.top, 16)
+                .padding(.top, 8)
             }
+            if viewModel.isLoadingEvolutions {
+                ProgressView()
+            }
+            
         }
-        .padding(.top, 8)
+        
     }
 }
 

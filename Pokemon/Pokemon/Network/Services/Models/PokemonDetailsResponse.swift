@@ -36,12 +36,17 @@ struct PokemonSpeciesResponse: Codable {
         let name: String
     }
     
+    struct EvolutionChain: Codable {
+        let url: String
+    }
+    
     let id: Int
     let name: String
     let isLegendary: Bool
     let color: Color
     let generation: Generation
     let flavorTextEntries: [FlavorTextEntry]
+    let evolutionChain: EvolutionChain
 }
 
 
@@ -79,13 +84,10 @@ struct EvolvesResponse: Codable {
     struct Species: Codable {
         let name: String
     }
-    
-    struct Evolve: Codable {
-        let species: Species
+
+    struct ChainLink: Codable {
+        let species : Species
+        let evolvesTo: [ChainLink]
     }
-    
-    struct Chain: Codable {
-        let evolves_to: [Evolve]
-    }
-    let chain: Chain
+    let chain: ChainLink
 }

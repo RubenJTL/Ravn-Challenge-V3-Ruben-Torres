@@ -11,14 +11,14 @@ import Combine
 protocol PokemonDetailServiceType {
     func getPokemonSpecies(id: Int) throws -> AnyPublisher<PokemonSpeciesResponse, Error>
     func getPokemon(id: Int) throws -> AnyPublisher<PokemonResponse, Error>
-//    func getEvolves(id: Int) throws -> AnyPublisher<EvolvesResponse, Error>
+    func getSprites(name: String) -> AnyPublisher<PokemonResponse, Error>
+    func getEvolves(stringUrl: String) -> AnyPublisher<EvolvesResponse, Error>
 }
 
 final class PokemonDetailService: PokemonDetailServiceType {
-
     let resfulService: RestfulServiceType
     let decoder: JSONDecoder
-
+    
     init(
         decoder: JSONDecoder = JSONDecoder(),
         resfulService: RestfulServiceType = RestfulService()
@@ -27,12 +27,12 @@ final class PokemonDetailService: PokemonDetailServiceType {
         self.decoder = decoder
         self.resfulService = resfulService
     }
-
+    
     func getPokemonSpecies(id: Int) throws -> AnyPublisher<PokemonSpeciesResponse, Error> {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon-species/\(id)/") else {
             throw NetworkError.invalidURL
         }
-
+        
         return resfulService.execute(for: url)
             .decode(type: PokemonSpeciesResponse.self, decoder: decoder)
             .eraseToAnyPublisher()
@@ -42,23 +42,26 @@ final class PokemonDetailService: PokemonDetailServiceType {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)/") else {
             throw NetworkError.invalidURL
         }
-
+        
         return resfulService.execute(for: url)
             .decode(type: PokemonResponse.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
     
-    func getSprites(name: String) throws -> AnyPublisher<PokemonResponse, Error> {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(name)/") else {
-            throw NetworkError.invalidURL
-        }
-
+    func getSprites(name: String) -> AnyPublisher<PokemonResponse, Error> {
+       let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(name)/")!
+        
         return resfulService.execute(for: url)
             .decode(type: PokemonResponse.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
-//    func getEvolves(id: Int) throws -> AnyPublisher<EvolvesResponse, Error> {
-//        //
-//    }
+    
+    
+    func getEvolves(stringUrl: String) -> AnyPublisher<EvolvesResponse, Error> {
+        let url = URL(string: stringUrl)!
+        return resfulService.execute(for: url)
+            .decode(type: EvolvesResponse.self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
     
 }
